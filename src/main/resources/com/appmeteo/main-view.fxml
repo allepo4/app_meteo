@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.appmeteo.controller.MainController"
+            stylesheets="@style.css"
+            styleClass="app-background"
+            prefWidth="1100" prefHeight="750">
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="top-bar">
+            <padding><Insets top="16" right="20" bottom="16" left="20"/></padding>
+            <TextField fx:id="cityField" promptText="Cerca una città..." prefWidth="320" styleClass="search-field"/>
+            <Button text="Cerca" onAction="#onSearchClicked" styleClass="search-button"/>
+            <Label fx:id="statusLabel" styleClass="status-label"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="16" prefWidth="380">
+            <padding><Insets top="10" right="8" bottom="16" left="20"/></padding>
+
+            <VBox spacing="6" alignment="CENTER" styleClass="hero-card">
+                <Label fx:id="cityNameLabel" text="Cerca una città" styleClass="hero-city"/>
+                <StackPane fx:id="weatherIconContainer" prefWidth="110" prefHeight="110"/>
+                <Label fx:id="currentTempLabel" text="--°" styleClass="hero-temp"/>
+                <Label fx:id="conditionLabel" text="" styleClass="hero-condition"/>
+                <Label fx:id="windLabel" text="" styleClass="hero-wind"/>
+            </VBox>
+
+            <VBox spacing="4" styleClass="card" VBox.vgrow="ALWAYS">
+                <Label text="Previsioni" styleClass="section-title"/>
+                <ListView fx:id="dailyForecastList" VBox.vgrow="ALWAYS" styleClass="forecast-list"/>
+            </VBox>
+
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="16">
+            <padding><Insets top="10" right="20" bottom="16" left="8"/></padding>
+
+            <VBox spacing="4" styleClass="card" VBox.vgrow="ALWAYS">
+                <Label text="Previsioni orarie" styleClass="section-title"/>
+                <TabPane fx:id="hourlyTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE"/>
+            </VBox>
+
+            <VBox fx:id="radarCard" spacing="4" styleClass="card" prefHeight="320">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="Radar pioggia" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="expandRadarButton" text="⤢" onAction="#onToggleRadarSize" styleClass="icon-button"/>
+                </HBox>
+                <WebView fx:id="radarWebView" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

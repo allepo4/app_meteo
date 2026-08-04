@@ -1,0 +1,232 @@
+/* =========================================================
+   TEMA STILE APPLE WEATHER — DARK MODE
+   ========================================================= */
+
+.app-background {
+    -fx-background-color: linear-gradient(to bottom, #0f1729, #1e2b4a 45%, #2d3f5f);
+    -fx-font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* --- BARRA DI RICERCA --- */
+.top-bar {
+    -fx-background-color: transparent;
+}
+
+.search-field {
+    -fx-background-color: rgba(255,255,255,0.10);
+    -fx-text-fill: #f2f2f7;
+    -fx-prompt-text-fill: rgba(242,242,247,0.45);
+    -fx-background-radius: 20px;
+    -fx-padding: 10px 16px;
+    -fx-font-size: 14px;
+    -fx-border-color: transparent;
+}
+
+.search-field:focused {
+    -fx-background-color: rgba(255,255,255,0.18);
+}
+
+.search-button {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-text-fill: #f2f2f7;
+    -fx-font-weight: 600;
+    -fx-background-radius: 20px;
+    -fx-padding: 10px 22px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+
+.search-button:hover {
+    -fx-background-color: rgba(255,255,255,0.25);
+}
+
+.status-label {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 12px;
+}
+
+/* --- CARD --- */
+.card {
+    -fx-background-color: rgba(255,255,255,0.06);
+    -fx-background-radius: 22px;
+    -fx-padding: 16px;
+}
+
+.hero-card {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-background-radius: 26px;
+    -fx-padding: 24px;
+}
+
+.hero-city {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 26px;
+    -fx-font-weight: 600;
+}
+
+.hero-temp {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 64px;
+    -fx-font-weight: 200;
+}
+
+.hero-condition {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 16px;
+    -fx-font-weight: 500;
+}
+
+.hero-wind {
+    -fx-text-fill: rgba(242,242,247,0.7);
+    -fx-font-size: 13px;
+}
+
+.section-title {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-padding: 0 0 6px 6px;
+}
+
+/* --- TAB PANE --- */
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab {
+    -fx-background-color: rgba(255,255,255,0.06);
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-padding: 8px 20px;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: rgba(255,255,255,0.15);
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+/* --- LISTA PREVISIONI --- */
+.forecast-list {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.forecast-row {
+    -fx-padding: 10px 8px;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: rgba(255,255,255,0.08);
+    -fx-background-radius: 12px;
+}
+
+.forecast-day {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+.forecast-condition {
+    -fx-text-fill: rgba(242,242,247,0.65);
+    -fx-font-size: 13px;
+}
+
+.forecast-rain {
+    -fx-text-fill: #64d2ff;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+}
+
+.forecast-temp-min {
+    -fx-text-fill: rgba(242,242,247,0.45);
+    -fx-font-size: 14px;
+    -fx-padding: 0 10px 0 0;
+}
+
+.forecast-temp-max {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+
+/* --- SCROLLBAR --- */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6px;
+}
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-background-radius: 3px;
+}
+/* --- RIGHE ORARIE (più grandi, con condizione e pioggia) --- */
+.hourly-row {
+    -fx-padding: 16px 10px;
+}
+
+.hourly-time {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+}
+
+.hourly-condition {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.hourly-rain {
+    -fx-text-fill: #64d2ff;
+    -fx-font-size: 12px;
+}
+
+.hourly-temp {
+    -fx-text-fill: #f2f2f7;
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+}
+.forecast-list .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+/* --- TOGLIE IL RIQUADRO BLU DI FOCUS SUI TAB (Oggi/Domani/ecc) --- */
+.tab-pane {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.tab-pane .tab-header-area .tab .focus-indicator {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+/* --- PULSANTE ICONA (es. espandi radar) --- */
+.icon-button {
+    -fx-background-color: rgba(255,255,255,0.10);
+    -fx-text-fill: #f2f2f7;
+    -fx-background-radius: 50%;
+    -fx-min-width: 28px;
+    -fx-min-height: 28px;
+    -fx-max-width: 28px;
+    -fx-max-height: 28px;
+    -fx-padding: 0;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.icon-button:hover {
+    -fx-background-color: rgba(255,255,255,0.20);
+}
