@@ -13,7 +13,7 @@ public class RadarMapHtmlBuilder {
               <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
               <style>
                 html, body { margin: 0; padding: 0; height: 100%%; width: 100%%; font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; }
-                #map { height: 100%%; width: 100%%; background: #1e2b4a; }
+                #map { height: 100%%; width: 100%%; background: #e8eef4; }
 
                 #control-panel {
                   position: absolute;
@@ -112,34 +112,55 @@ public class RadarMapHtmlBuilder {
 
                 var map = L.map('map', { minZoom: 3, maxZoom: 12, zoomControl: false }).setView([%f, %f], 6);
 
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                // Mappa di base Esri (non richiede chiave API).
+                // Cambia BASEMAP per scegliere lo stile: 'street', 'topo' o 'satellite'
+                var BASEMAPS = {
+                  street: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+                  topo: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+                  satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+                };
+                var BASEMAP = 'street';
+
+                L.tileLayer(BASEMAPS[BASEMAP], {
                   minZoom: 3,
                   maxZoom: 18,
-                  attribution: '&copy; OpenStreetMap &copy; CARTO'
+                  attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, USGS and contributors'
                 }).addTo(map);
 
                 L.control.zoom({ position: 'topright' }).addTo(map);
+
+                // Il tier gratuito di RainViewer ha un limite di 100 richieste per IP al minuto:
+                // uso tile da 512 px, creo i layer solo quando servono e salto alcuni frame.
+                var STEP = 2; // 2 = un frame ogni 20 min (6 frame). Metti 1 per averli tutti (più richieste)
 
                 fetch('https://api.rainviewer.com/public/weather-maps.json')
                   .then(r => r.json())
                   .then(data => {
                     var past = data.radar.past || [];
-                    var nowcast = data.radar.nowcast || [];
-                    var frames = [...past, ...nowcast];
+                    // tengo sempre l'ultimo frame e salto quelli intermedi
+                    var frames = past.filter(function(f, i) { return (past.length - 1 - i) %% STEP === 0; });
 
                     if (frames.length === 0) {
                       document.getElementById('radar-time').innerText = "Radar non disponibile";
                       return;
                     }
 
-                    var layers = frames.map(function(frame) {
-                      var layer = L.tileLayer(data.host + frame.path + '/256/{z}/{x}/{y}/2/1_1.png', {
-                        opacity: 0,
-                        maxNativeZoom: 7
-                      });
-                      layer.addTo(map);
-                      return layer;
-                    });
+                    var layers = new Array(frames.length);
+
+                    // Il layer di un frame viene creato solo la prima volta che serve
+                    function getLayer(i) {
+                      if (!layers[i]) {
+                        layers[i] = L.tileLayer(data.host + frames[i].path + '/512/{z}/{x}/{y}/2/1_1.png', {
+                          tileSize: 512,
+                          zoomOffset: -1,
+                          maxNativeZoom: 8,
+                          opacity: 0,
+                          attribution: 'Weather data by <a href="https://www.rainviewer.com/">RainViewer</a>'
+                        });
+                        layers[i].addTo(map);
+                      }
+                      return layers[i];
+                    }
 
                     var slider = document.getElementById('radar-slider');
                     slider.max = frames.length - 1;
@@ -150,9 +171,9 @@ public class RadarMapHtmlBuilder {
                     var intervalId = null;
 
                     function showFrame(index) {
-                      layers[currentIndex].setOpacity(0);
+                      if (layers[currentIndex]) layers[currentIndex].setOpacity(0);
                       currentIndex = (index + frames.length) %% frames.length;
-                      layers[currentIndex].setOpacity(0.65);
+                      getLayer(currentIndex).setOpacity(0.65);
                       slider.value = currentIndex;
 
                       var timestamp = frames[currentIndex].time * 1000;
